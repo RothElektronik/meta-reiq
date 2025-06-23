@@ -1,0 +1,11 @@
+[Unit]
+Description=SWUpdate OTA HTTP Client
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/bin/swupdate -u -e stable -f /etc/swupdate.cfg
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

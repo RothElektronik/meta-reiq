@@ -1,0 +1,20 @@
+software = {
+  version = "1.0.0"
+
+  preinstall = "version_check.lua"
+
+  images: (
+    {
+      filename = "core-image-reiqh.ext4.gz"
+      type = "raw"
+      device = "/dev/mmcblk0p2"
+    }
+  )
+
+  files: (
+    {
+      filename = "version.txt"
+      path = "/etc/version.txt"
+    }
+  )
+}

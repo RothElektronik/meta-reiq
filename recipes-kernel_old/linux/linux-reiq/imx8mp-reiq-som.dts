@@ -1,0 +1,50 @@
+/dts-v1/;
+#include "imx8mp.dtsi"
+#include "imx8mp-var-som-symphony.dtsi"
+
+/ {
+    model = "reIQ i.MX8MP Custom SOM";
+    compatible = "reiq,imx8mp-reiq", "fsl,imx8mp";
+
+    chosen {
+        stdout-path = &uart2;
+    };
+};
+
+&sound {
+    compatible = "simple-audio-card";
+    simple-audio-card,name = "sph0645-i2s";
+    simple-audio-card,format = "i2s";
+    simple-audio-card,bitclock-master = <&cpu_dai>;
+    simple-audio-card,frame-master = <&cpu_dai>;
+    simple-audio-card,cpu {
+        sound-dai = <&sai3>;
+    };
+    simple-audio-card,codec {
+        sound-dai = <&sph0645_codec>;
+    };
+};
+
+sph0645_codec: sph0645_codec {
+    #sound-dai-cells = <0>;
+    compatible = "everest,sph0645";
+};
+
+&sai3 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_sai3>;
+    assigned-clocks = <&clk IMX8MP_CLK_SAI3>;
+    assigned-clock-parents = <&clk IMX8MP_AUDIO_PLL1_OUT>;
+    assigned-clock-rates = <12288000>;
+    status = "okay";
+};
+
+&pinctrl {
+    pinctrl_sai3: sai3grp {
+        fsl,pins = <
+            MX8MP_IOMUXC_SAI3_TXFS__SAI3_TX_SYNC  0xd6
+            MX8MP_IOMUXC_SAI3_TXC__SAI3_TX_BCLK   0xd6
+            MX8MP_IOMUXC_SAI3_TXD__SAI3_TX_DATA0  0xd6
+        >;
+    };
+};

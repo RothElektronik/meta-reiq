@@ -1,0 +1,18 @@
+[Unit]
+Description=Home Assistant Container
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+ExecStartPre=-/usr/bin/docker rm -f homeassistant
+ExecStartPre=/usr/bin/docker pull ghcr.io/home-assistant/home-assistant:sha256-b25c7f533111503e5493bfd78fac48824ddc8260effd91b7dbc4309c58799db3.sig
+ExecStart=/usr/bin/docker run --rm --name homeassistant \
+  --privileged \
+  --network=host \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /data/homeassistant:/config \
+  ghcr.io/home-assistant/home-assistant:2025.6.1
+
+[Install]
+WantedBy=multi-user.target

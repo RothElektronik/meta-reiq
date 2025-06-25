@@ -10,7 +10,6 @@ IMAGE_INSTALL:append = " \
   wpa-supplicant \
   bluez5 \
   bluez5-testtools \
-  networkmanager \
   alsa-utils \
   alsa-state \
   alsa-lib \
@@ -19,15 +18,16 @@ IMAGE_INSTALL:append = " \
   htop \
   openssh \
   openssh-sftp-server \
-  swupdate \
   docker \
-  home-assistant \
   wifi \
   sudo \
+  docker-init \
+  resize-rootfs \
+  parted \
   "
 
+
 EXTRA_IMAGE_FEATURES = " \
-    qtcreator-debug \
     allow-root-login \
     "
 INHERIT += "extrausers"
@@ -45,3 +45,5 @@ setup_data_mount () {
     install -d ${IMAGE_ROOTFS}/data/reiqh-ui
 }
 
+inherit extrausers
+EXTRA_USERS_PARAMS = "usermod -p '\$5\$asvtlMyGxy7YJkGg\$rElQ/.HFqtMZBOw5RIFr2lq3gFYlPB.42PvDC.vHDd7' root;"

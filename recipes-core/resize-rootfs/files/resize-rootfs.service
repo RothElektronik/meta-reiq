@@ -1,0 +1,11 @@
+[Unit]
+Description=Resize Root Filesystem
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/resize-rootfs.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

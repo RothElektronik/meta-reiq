@@ -1,0 +1,19 @@
+[Unit]
+Description=Home Assistant Container
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker run \
+  --rm \
+  --name homeassistant \
+  --platform=arm64 \
+  --privileged \
+  --network=host \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /data/homeassistant:/config \
+  homeassistant/home-assistant:stable
+
+[Install]
+WantedBy=multi-user.target
